@@ -1,43 +1,63 @@
 import { fetchBreeds, fetchCatByBreed } from './js/cat-api';
 import { createBreedsMarkup, createInfoMarkup } from './js/create-markup';
+import Notiflix from 'notiflix';
+
 const breedSelect = document.querySelector('.breed-select');
 const loaderEl = document.querySelector('.loader');
 const errorEl = document.querySelector('.error');
 const divCatIfoEl = document.querySelector('.cat-info');
 
+loaderEl.classList.replace('loader', 'is-hidden');
+errorEl.classList.add('is-hidden');
+divCatIfoEl.classList.add('is-hidden');
+
+fetchBreeds()
+  .then(breeds => createBreedsMarkup(breeds))
+  .catch(error => {
+    console.log(error);
+    Notiflix.Notify.failure(
+      'Oops! Something went wrong! Try reloading the page!'
+    );
+  })
+  .finally(() => {
+    //   loaderEl.classList.add('unvisible');
+    //   breedSelect.classList.remove('unvisible');
+  });
+
+// console.log(arrDataBreeds);
 breedSelect.addEventListener('change', onSelectBreed);
 
-// // fetchCatByBreed(breedId);
-// fetchCatByBreed('abys').then(data => console.log(data));
+// fetchCatByBreed(breedId);
+fetchCatByBreed('abys').then(data => console.log(data));
 // fetchCatByBreed();
 // console.log(fetchBreeds());
 
-// let arrDataBreeds = [];
-
-// fetchBreeds()
-//   .then(data => {
-//     data.forEach(breed => {
-//       const breedData = {
-//         id: breed.id,
-//         name: breed.name,
-//       };
-//       arrDataBreeds.push(breedData);
-//     });
-//   })
-//   .catch(err => {
-//     console.error(err);
-//   });
-// console.log(arrDataBreeds);
 function onSelectBreed(event) {
-  const breedId = event.currentTarget.value;
+  clearAll();
+  loaderEl.classList.replace('is-hidden', 'loader');
+  errorEl.classList.add('is-hidden');
+  divCatIfoEl.classList.add('is-hidden');
+  const breedId = event.target.value;
+
   fetchCatByBreed(breedId)
-    .then(data => {
-      createInfoMarkup(data, breedSelect);
-      console.log(breedId);
+    .then(breed => createInfoMarkup(breed))
+    .catch(error => {
+      console.log(error);
+      Notiflix.Notify.failure(
+        'Oops! Something went wrong! Try reloading the page!'
+      );
     })
-    .catch(onFetchError);
+    .finally(() => {
+      //   loaderEl.classList.add('unvisible');
+      //   breedSelect.classList.remove('unvisible');
+    });
+  // .finally(() => loaderEl.classList.add('unvisible'));
 }
 
+function clearAll() {
+  //   breedSelect.innerHTML = '';
+  divCatIfoEl.innerHTML = '';
+}
 export { breedSelect, divCatIfoEl };
 // ===============================================
 // import axios from 'axios';
