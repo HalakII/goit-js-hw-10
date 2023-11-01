@@ -24,10 +24,7 @@ export function fetchCatByBreed(breedId) {
   const BASE_URL = 'https://api.thecatapi.com/v1';
   const END_POINT = '/images/search';
   const PARAMS = `?breed_ids=${breedId}`;
-  // const PARAMS = new URLSearchParams({
-  //   breed_ids: 'name,description,temperament',
-  // });
-  const url = `${BASE_URL}${END_POINT}${PARAMS}`;
+  const url = BASE_URL + END_POINT + PARAMS;
   // console.log(url);
   const options = {
     headers: {
@@ -40,7 +37,7 @@ export function fetchCatByBreed(breedId) {
     if (!response.ok) {
       throw new Error(response.status);
     }
-    return response.json;
+    return response.json();
   });
 }
 
@@ -53,11 +50,11 @@ export function fetchCatByBreed(breedId) {
 // export function fetchBreeds() {
 //   return axios
 //     .get('https://api.thecatapi.com/v1/breeds')
-//     .then(response => response);
+//     .then(response => response.data);
 // }
 
 // export function fetchCatByBreed(breedId) {
 //   return axios
 //     .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
-//     .then(response => response);
+//     .then(response => response.data);
 // }

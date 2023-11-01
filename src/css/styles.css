@@ -29,7 +29,7 @@ img {
   }
 }
 
-.loader {
+.wheel {
   width: 48px;
   height: 48px;
   border: 5px dotted #2596be;
@@ -48,8 +48,10 @@ img {
     transform: rotate(360deg);
   }
 }
-
-.unvisible {
+.error {
+  display: none;
+}
+.hidden {
   display: none;
 }
 

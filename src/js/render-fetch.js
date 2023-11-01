@@ -5,7 +5,8 @@ import 'slim-select/dist/slimselect.css';
 import Notiflix from 'notiflix';
 
 export const fetchAndRenderBreeds = () => {
-  loaderEl.classList.remove('unvisible');
+  console.log(loaderEl);
+  loaderEl.classList.remove('hidden');
   fetchBreeds()
     .then(data => createBreedsMarkup(data))
     .catch(error => {
@@ -15,8 +16,8 @@ export const fetchAndRenderBreeds = () => {
       );
     })
     .finally(() => {
-      loaderEl.classList.add('unvisible');
-      breedSelect.classList.remove('unvisible');
+      loaderEl.classList.add('hidden');
+      breedSelect.classList.remove('hidden');
     });
 };
 
